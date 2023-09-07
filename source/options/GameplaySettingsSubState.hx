@@ -49,6 +49,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false); //Default value
 		addOption(option);
 
+		var option:Option = new Option('Streamer Mode',
+		    'Some songs are from somewhere outside this mod, please check this if you want to use original songs.',
+			'streamer',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Middlescroll',
 			'If checked, your notes get centered.',
 			'middleScroll',

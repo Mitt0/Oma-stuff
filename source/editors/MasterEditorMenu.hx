@@ -27,7 +27,8 @@ class MasterEditorMenu extends MusicBeatState
 		'Dialogue Portrait Editor',
 		'Character Editor',
 		'Chart Editor',
-		'ThankYouState Test'
+		'ThankYouState Test',
+		'Score Test'
 	];
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var directories:Array<String> = [null];
@@ -129,6 +130,8 @@ class MasterEditorMenu extends MusicBeatState
 					LoadingState.loadAndSwitchState(new ChartingState(), false);
 				case 'ThankYouState Test':
 					MusicBeatState.switchState(new ThankYouState());
+				case 'Score Test': //too lazy to go to a song
+					MusicBeatState.switchState(new ReslutState());
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL

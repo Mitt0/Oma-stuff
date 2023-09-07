@@ -1,4 +1,4 @@
-package;
+package; //Mitt0, Search for "public function endSong()" on ctrl + f
 
 import flixel.graphics.FlxGraphic;
 #if desktop
@@ -83,17 +83,19 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['Stop Playing', 0.2], //From 0% to 19%
-		['Garbage', 0.4], //From 20% to 39%
-		['Wtf', 0.5], //From 40% to 49%
-		['Bruh', 0.6], //From 50% to 59%
-		['Bro, How?', 0.69], //From 60% to 68%
-		['Lol', 0.7], //69%
-		['Eh, Okay', 0.8], //From 70% to 79%
-		['Not Bad!', 0.9], //From 80% to 89%
-		['Alright!', 1], //From 90% to 99%
-		['PERFECT!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['Never Play Again', 0.2, 'F-'], //From 0% to 19%
+		['You Suck, Get Out', 0.4, 'F'], //From 20% to 39%
+		['Get Out', 0.5, 'D'], //From 40% to 49%
+		['What The Fuck?', 0.6, 'C'], //From 50% to 59%
+		['Meh, Restart', 0.69, 'B'], //From 60% to 68%
+		['Nice', 0.7, '69'], //69%
+		['Okay, Not Bad I Guess', 0.8, 'A'], //From 70% to 79%
+		['Amazing!', 0.9, 'S'], //From 80% to 89%
+		['Professional!, Choked SFC', 0.95, 'SS'], //From 90% to 99% //Its actually possible hahaha, i can set this to 0.99 so it seperates from SS+
+		['Perfect!!', 1, 'SS+'] //The value on this one isn't used actually, since Perfect is always "1"
 	];
+
+	public static var ratingPTShit:String = '';
 
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
@@ -2304,7 +2306,8 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + songScore
 		+ ' | Misses: ' + songMisses
 		+ ' | Rating: ' + ratingName
-		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
+		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '')
+		+ ' | ' + ratingPTShit;
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
@@ -3049,11 +3052,11 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
 		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
-		iconP1.scale.set(mult, mult);
+		//iconP1.scale.set(mult, mult);
 		iconP1.updateHitbox();
 
 		var mult:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
-		iconP2.scale.set(mult, mult);
+		//iconP2.scale.set(mult, mult);
 		iconP2.updateHitbox();
 
 		var iconOffset:Int = 26;
@@ -3897,7 +3900,7 @@ class PlayState extends MusicBeatState
 	public var transitioning = false;
 	public function endSong():Void
 	{
-		//Should kill you if you tried to cheat (Why tho, cheating is cool /j -Mitt0)
+		//Should kill you if you tried to cheat (Why :[ Cheating is fun :] /j -Mitt0)
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
 				if(daNote.strumTime < songLength - Conductor.safeZoneOffset) {
@@ -3942,6 +3945,8 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
+		//FlxG.switchState(new ResultsScreen());
+
 		var ret:Dynamic = callOnLuas('onEndSong', [], false);
 		if(ret != FunkinLua.Function_Stop && !transitioning) {
 			if (SONG.validScore)
@@ -3971,12 +3976,15 @@ class PlayState extends MusicBeatState
 				{
 					WeekData.loadTheFirstEnabledMod();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
-					
 					cancelMusicFadeTween();
 					if(FlxTransitionableState.skipNextTransIn) {
 						CustomFadeTransition.nextCamera = null;
 					}
-					MusicBeatState.switchState(new ThankYouState());
+
+					ReslutState.scoreVar = songScore; //if ya want to make display weekscore, just replace songScore to campaignScore -Electro
+					ReslutState.missesVar = songMisses; //campaignMisses
+					ReslutState.ratingVar = ratingPTShit; //i want chips
+					MusicBeatState.switchState(new ReslutState());
 
 					// if ()
 					if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
@@ -4039,7 +4047,12 @@ class PlayState extends MusicBeatState
 				if(FlxTransitionableState.skipNextTransIn) {
 					CustomFadeTransition.nextCamera = null;
 				}
-				MusicBeatState.switchState(new FreeplayState());
+
+				ReslutState.scoreVar = songScore;
+				ReslutState.missesVar = songMisses;
+				ReslutState.ratingVar = ratingPTShit; //i want chips
+				MusicBeatState.switchState(new ReslutState());
+
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
 			}
@@ -5030,8 +5043,8 @@ class PlayState extends MusicBeatState
 			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
 
-		iconP1.scale.set(1.2, 1.2);
-		iconP2.scale.set(1.2, 1.2);
+		//iconP1.scale.set(1.2, 1.2);
+		//iconP2.scale.set(1.2, 1.2);
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -5199,7 +5212,10 @@ class PlayState extends MusicBeatState
 		if(ret != FunkinLua.Function_Stop)
 		{
 			if(totalPlayed < 1) //Prevent divide by 0
+			{
 				ratingName = '?';
+			    ratingPTShit = '?';
+			}
 			else
 			{
 				// Rating Percent
@@ -5210,6 +5226,7 @@ class PlayState extends MusicBeatState
 				if(ratingPercent >= 1)
 				{
 					ratingName = ratingStuff[ratingStuff.length-1][0]; //Uses last string
+					ratingPTShit = ratingStuff[ratingStuff.length-1][2];
 				}
 				else
 				{
@@ -5217,6 +5234,7 @@ class PlayState extends MusicBeatState
 					{
 						if(ratingPercent < ratingStuff[i][1])
 						{
+							ratingPTShit = ratingStuff[i][2];
 							ratingName = ratingStuff[i][0];
 							break;
 						}

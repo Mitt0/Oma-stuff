@@ -61,6 +61,7 @@ class WeekEditorState extends MusicBeatState
 		
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
 		var bgYellow:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFF9CF51);
+		add(bgYellow);
 		bgSprite = new FlxSprite(0, 56);
 		bgSprite.antialiasing = ClientPrefs.globalAntialiasing;
 
@@ -68,9 +69,6 @@ class WeekEditorState extends MusicBeatState
 		weekThing.y += weekThing.height + 20;
 		weekThing.antialiasing = ClientPrefs.globalAntialiasing;
 		add(weekThing);
-
-		var blackBarThingie:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 56, FlxColor.BLACK);
-		add(blackBarThingie);
 		
 		grpWeekCharacters = new FlxTypedGroup<MenuCharacter>();
 		
@@ -94,8 +92,6 @@ class WeekEditorState extends MusicBeatState
 			weekCharacterThing.y += 70;
 			grpWeekCharacters.add(weekCharacterThing);
 		}
-
-		add(bgYellow);
 		add(bgSprite);
 		add(grpWeekCharacters);
 

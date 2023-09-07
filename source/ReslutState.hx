@@ -78,13 +78,20 @@ import vlc.MP4Handler;
 using StringTools;
 
 //You might be wondering, why is there so many imports on this simple code?
-//Well, its because the original code is fucked up when ported to psych (It's originaly on that one kade but better engine, i forgot lol) and needs to be changed
+//Well, its because the original code is fucked up when ported to psych (It's originaly from forever engine) and needs to be changed
 //So, i copied the imports from PlayState.hx to make it work
 
-class ThankYouState extends MusicBeatState
+class ReslutState extends MusicBeatState
 {
-	var Thx:FlxSprite;
-	var Txt:FlxText;
+	var text123:FlxText;
+	var text123_2:FlxText;
+	var normaltext:FlxText;
+	var normaltext2:FlxText;
+	var normaltext3:FlxText;
+	//scores
+	public static var scoreVar:Int = 0;
+	public static var missesVar:Int = 0;
+	public static var ratingVar:String = '';
 	//var text1:FlxText
 	
 	override function create() 
@@ -93,40 +100,41 @@ class ThankYouState extends MusicBeatState
 		//text1 = new FlxText(0, 0, 1000, "Thank you for Playing Feline Fiasco <3", 72);
 		//text1.screenCenter();
 		//add(text1); (Example from feline fiasco (Thx Tucker :D))
+
 		super.create();
-		Thx = new FlxSprite().loadGraphic(Paths.image('thank you for playing!')); //Loads the image (duh)
-		Thx.screenCenter();
-		add(Thx);
+		text123 = new FlxText(50, 200, 500, "Score test: ", 72);
+		text123.text = Std.string(scoreVar);
+		add(text123);
 
-		super.create(); //Do i have to create another one? idk tbh
-	    Txt = new FlxText(0, 685, 1000, "Press Enter key to view the credits, Press BackSpace to return to the main menu!", 17);
-		Txt.screenCenter(X);
-		add(Txt);
+		text123_2 = new FlxText(50, 200 + 200, 500, "Misses test: ", 72);
+		text123_2.text = Std.string(missesVar);
+		add(text123_2);
 
-		FlxG.sound.playMusic(Paths.music('LD_Old'), 1);
+		var text123_2:FlxText = new FlxText(50, 200 + 400, 500, "Rating test: ", 72);
+		text123_2.text = ratingVar;
+		add(text123_2);
+        
+		//Normal texts
+		super.create();
+		normaltext = new FlxText(50, 100, 500, 'SCORE', 72);
+		add(normaltext);
 
-		//if (ClientPrefs.streamer)
-		//{
-		    //FlxG.sound.playMusic(Paths.music('LD_Old'), 1);
-		//}
-	    //else 
-		//{
-			//FlxG.sound.playMusic(Paths.music('Mikuwaifu'), 1);
-		//}
+		normaltext2 = new FlxText(50, 300, 500, 'MISSES', 72);
+		add(normaltext2);
+
+		normaltext3 = new FlxText(50, 500, 500, 'RATING', 72);
+		add(normaltext3);
+
+		FlxG.sound.playMusic(Paths.music('freakyMenu'), 1);
 
 	}
 	
 	override function update(elapsed:Float) 
 	{
 		if (controls.ACCEPT)
-			MusicBeatState.switchState(new CreditsState());
-
-		if (controls.BACK)
 			MusicBeatState.switchState(new MainMenuState());
 
 		super.update(elapsed);
 	}
 	
-} //THIS TOOK SO LONG, VIKKIE YOU ARE SO LUCKY THAT I AM FREE
-
-//yeah uh, this code will be no longer needed, but i wont delete it (THIS SHIT TOOK SO LONG)
+}

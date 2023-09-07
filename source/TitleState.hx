@@ -57,6 +57,8 @@ class TitleState extends MusicBeatState
 
 	public static var initialized:Bool = false;
 
+	var Titlething = FlxSprite; //This for something
+
 	var blackScreen:FlxSprite;
 	var credGroup:FlxGroup;
 	var credTextShit:Alphabet;
