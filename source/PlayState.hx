@@ -1,4 +1,4 @@
-package; //Mitt0, Search for "public function endSong()" on ctrl + f
+package; //0, Search for "public function endSong()" on ctrl + f
 
 import flixel.graphics.FlxGraphic;
 #if desktop
@@ -91,7 +91,7 @@ class PlayState extends MusicBeatState
 		['Nice', 0.7, '69'], //69%
 		['Okay, Not Bad I Guess', 0.8, 'A'], //From 70% to 79%
 		['Amazing!', 0.9, 'S'], //From 80% to 89%
-		['Professional!, Choked SFC', 0.95, 'SS'], //From 90% to 99% //Its actually possible hahaha, i can set this to 0.99 so it seperates from SS+
+		['Professional! Choked SFC', 0.99, 'SS'], //From 90% to 99% //Its actually possible hahaha, i can set this to 0.99 so it seperates from SS+
 		['Perfect!!', 1, 'SS+'] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 
@@ -3069,11 +3069,15 @@ class PlayState extends MusicBeatState
 
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
+		else if (healthBar.percent > 80)
+			iconP1.animation.curAnim.curFrame = 2;
 		else
 			iconP1.animation.curAnim.curFrame = 0;
 
 		if (healthBar.percent > 80)
 			iconP2.animation.curAnim.curFrame = 1;
+		else if (healthBar.percent < 20)
+			iconP2.animation.curAnim.curFrame = 2;
 		else
 			iconP2.animation.curAnim.curFrame = 0;
 

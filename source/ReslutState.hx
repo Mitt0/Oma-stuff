@@ -81,19 +81,26 @@ using StringTools;
 //Well, its because the original code is fucked up when ported to psych (It's originaly from forever engine) and needs to be changed
 //So, i copied the imports from PlayState.hx to make it work
 
+//Thank electro and me for making this cool thing
+
 class ReslutState extends MusicBeatState
 {
 	var text123:FlxText;
 	var text123_2:FlxText;
-	var normaltext:FlxText;
-	var normaltext2:FlxText;
-	var normaltext3:FlxText;
+	var text123_3:FlxText;
+	var normaltext:FlxText;  //score text
+	var normaltext2:FlxText; //misses text
+	var normaltext3:FlxText; //rating text
+	var normaltext4:FlxText; //continue text
+	var normaltext5:FlxText; //reset text
 	//scores
 	public static var scoreVar:Int = 0;
 	public static var missesVar:Int = 0;
 	public static var ratingVar:String = '';
-	//var text1:FlxText
-	
+	//var text1:FlxText //just example so i can remind myself
+	//image
+	var mikumywaifu:FlxSprite;
+
 	override function create() 
 	{
 		//super.create();
@@ -101,30 +108,52 @@ class ReslutState extends MusicBeatState
 		//text1.screenCenter();
 		//add(text1); (Example from feline fiasco (Thx Tucker :D))
 
-		super.create();
+		//I love how i created this with the Thank you for playing screen originally from the oma mod lmao
+
+		super.create(); //image
+		mikumywaifu = new FlxSprite().loadGraphic(Paths.image('result'));
+		mikumywaifu.screenCenter();
+		add(mikumywaifu);
+
+		super.create(); //scores
 		text123 = new FlxText(50, 200, 500, "Score test: ", 72);
+		text123.setFormat("assets/fonts/cp_and_trans.ttf", 72); //Adds font
 		text123.text = Std.string(scoreVar);
 		add(text123);
 
-		text123_2 = new FlxText(50, 200 + 200, 500, "Misses test: ", 72);
+		text123_2 = new FlxText(50, 200 + 200, 500, "Misses test: ", 72); //Misses
+		text123_2.setFormat("assets/fonts/cp_and_trans.ttf", 72);
 		text123_2.text = Std.string(missesVar);
 		add(text123_2);
 
-		var text123_2:FlxText = new FlxText(50, 200 + 400, 500, "Rating test: ", 72);
-		text123_2.text = ratingVar;
-		add(text123_2);
-        
+		text123_3 = new FlxText(50, 200 + 400, 1250, "Rating test: ", 72); //Rating
+		text123_3.setFormat('assets/fonts/cp_and_trans.ttf', 72);
+		text123_3.text = ratingVar;
+		add(text123_3);
+
 		//Normal texts
 		super.create();
-		normaltext = new FlxText(50, 100, 500, 'SCORE', 72);
+		normaltext = new FlxText(50, 100, 500, 'SCORE:', 72);
+		normaltext.setFormat('assets/fonts/cp_and_trans.ttf', 72);
 		add(normaltext);
 
-		normaltext2 = new FlxText(50, 300, 500, 'MISSES', 72);
+		normaltext2 = new FlxText(50, 300, 500, 'MISSES:', 72);
+		normaltext2.setFormat('assets/fonts/cp_and_trans.ttf', 72);
 		add(normaltext2);
 
-		normaltext3 = new FlxText(50, 500, 500, 'RATING', 72);
+		normaltext3 = new FlxText(50, 500, 500, 'RATING:', 72);
+		normaltext3.setFormat('assets/fonts/cp_and_trans.ttf', 72);
 		add(normaltext3);
 
+		normaltext4 = new FlxText(800, 650, 500, '(ENTER) Continue ->', 36);
+		normaltext4.setFormat('assets/fonts/cp_and_trans.ttf', 36);
+		add(normaltext4);
+
+		normaltext5 = new FlxText(800, 600, 500, '<- Restart (RESET)', 36);
+		normaltext5.setFormat('assets/fonts/cp_and_trans.ttf', 36);
+		add(normaltext5);
+
+        //music
 		FlxG.sound.playMusic(Paths.music('freakyMenu'), 1);
 
 	}
@@ -133,6 +162,9 @@ class ReslutState extends MusicBeatState
 	{
 		if (controls.ACCEPT)
 			MusicBeatState.switchState(new MainMenuState());
+		
+		if (controls.RESET)
+			LoadingState.loadAndSwitchState(new PlayState());
 
 		super.update(elapsed);
 	}
