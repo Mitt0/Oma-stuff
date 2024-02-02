@@ -44,7 +44,7 @@ class CreditsState extends MusicBeatState
 		DiscordClient.changePresence("Credits", null);
 		#end
 
-		FlxG.sound.playMusic(Paths.music('LD_Old'), 0.5);
+		// FlxG.sound.playMusic(Paths.music('LD_Old'), 0.5); No more music credits :(
 
 		persistentUpdate = true;
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
@@ -91,12 +91,8 @@ class CreditsState extends MusicBeatState
 			['Quinn',               'quinn',            'D? More like Deez nu- -Quinn (Lua Coder)',                                                                                           'https://www.youtube.com/@Quinndeeznutz', 'BF00FF'],
 			['Johono',              'blurry johono',    'Literally MoistCritical -Zero (Composer? or should i say "Cover maker"?)',                                                           'https://twitter.com/Johoonoo',           '6B00A1'],
 			['Crystal',             'crustal',          'Cool music guy -Zero (Musician)',                                                                                                    'https://youtube.com/@crystal-playz',     '5CACEE'],
-			// (Sadly left the team due to his own reasons :sad:) ['Hades',               'Hades',            'Relationships are like a fart, if you force it, its probably shit -Hades (Average discord moderator)',                               'https://twitter.com/xXHadesUndeadXx',    'EB4034'],
 			['PANKIE',              'Pankster',         'Known As The Pankster -Zero (Sprite animation)',                                                                                     'https://twitter.com/Pankiepoo',          'AD33FF'],
             [''],
-			['Songs'],
-			['Old Lovey Dovey Inst (By Crystal)', 'Person', 'Used in Credits', 'https://google.com', 'FFFFFF'],
-			[''],
 			['Helpers'],
 			['TuckertheTuck',       'tuck',             'This guy is cool -Zero (Code helper)',                                         'https://google.com', '50C878'],
 			['Electro',             'person',           'Honestly, I forgot about him but thank god I remembered - Zero (Code Helper)', 'https://google.com', '43C6DB'],
