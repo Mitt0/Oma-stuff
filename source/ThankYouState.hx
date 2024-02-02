@@ -71,10 +71,6 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
-#if VIDEOS_ALLOWED
-import vlc.MP4Handler;
-#end
-
 using StringTools;
 
 //You might be wondering, why is there so many imports on this simple code?
