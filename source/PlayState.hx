@@ -60,6 +60,7 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
+import ResultSubState;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -3979,16 +3980,17 @@ class PlayState extends MusicBeatState
 				if (storyPlaylist.length <= 0)
 				{
 					WeekData.loadTheFirstEnabledMod();
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					//FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					cancelMusicFadeTween();
 					if(FlxTransitionableState.skipNextTransIn) {
 						CustomFadeTransition.nextCamera = null;
 					}
 
-					ReslutState.scoreVar = songScore; //if ya want to make display weekscore, just replace songScore to campaignScore -Electro
-					ReslutState.missesVar = songMisses; //campaignMisses
-					ReslutState.ratingVar = ratingPTShit; //i want chips
-					MusicBeatState.switchState(new ReslutState());
+					ResultSubState.scoreVar = songScore; //if ya want to make display weekscore, just replace songScore to campaignScore -Electro
+					ResultSubState.missesVar = songMisses; //campaignMisses
+					ResultSubState.ratingVar = ratingPTShit; //i want chips
+					openSubState(new ResultSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+					//MusicBeatState.switchState(new ReslutState());
 
 					// if ()
 					if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
@@ -4052,12 +4054,12 @@ class PlayState extends MusicBeatState
 					CustomFadeTransition.nextCamera = null;
 				}
 
-				ReslutState.scoreVar = songScore;
-				ReslutState.missesVar = songMisses;
-				ReslutState.ratingVar = ratingPTShit; //i want chips
-				MusicBeatState.switchState(new ReslutState());
+				ResultSubState.scoreVar = songScore;
+				ResultSubState.missesVar = songMisses;
+				ResultSubState.ratingVar = ratingPTShit; //i want chips
+				openSubState(new ResultSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				//FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
 			}
 			transitioning = true;
